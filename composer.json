@@ -1,0 +1,21 @@
+{
+    "name": "cjdevstudios/entitymanagement-bundle",
+    "description": "A Symfony bundle for magically handling entities, menu generation, form creation and more.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Curtis Conard",
+            "email": "cconard@cjdevstudios.com"
+        }
+    ],
+    "require": {
+        "jms/serializer-bundle": "dev-master",
+        "phpoffice/phpspreadsheet": "^1.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "CJDevStudios\\EntityManagementBundle\\": ""
+        }
+    }
+}
