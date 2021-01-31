@@ -10,8 +10,13 @@
 
 namespace CJDevStudios\EntityManagementBundle;
 
+use CJDevStudios\EntityManagementBundle\DependencyInjection\EntityManagementExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EntityManagementBundle extends Bundle {
 
+   public function getContainerExtension()
+   {
+      return new EntityManagementExtension();
+   }
 }

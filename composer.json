@@ -11,7 +11,8 @@
     ],
     "require": {
         "jms/serializer-bundle": "dev-master",
-        "phpoffice/phpspreadsheet": "^1.16"
+        "phpoffice/phpspreadsheet": "^1.16",
+        "cjdevstudios/dev-bundle": "dev-main"
     },
     "autoload": {
         "psr-4": {
