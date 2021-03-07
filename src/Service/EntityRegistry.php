@@ -17,6 +17,7 @@ use CJDevStudios\EntityManagementBundle\Exception\UnknownModuleIdentifierExcepti
 use CJDevStudios\EntityManagementBundle\ORM\Annotation\Dropdown;
 use CJDevStudios\EntityManagementBundle\ORM\Annotation\FieldOptions;
 use CJDevStudios\EntityManagementBundle\ORM\Annotation\VirtualColumn;
+use CJDevStudios\EntityManagementBundle\Util\EntityUtil;
 use Composer\Autoload\ClassLoader;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\ORM\Mapping\Column;
@@ -37,7 +38,7 @@ use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 /**
- * Basic implementation of an {@link EntityRegistryInterface Entity Reigstry}.
+ * Basic implementation of an {@link EntityRegistryInterface Entity Registry}.
  *
  * @since 1.0.0
  */
@@ -395,7 +396,7 @@ class EntityRegistry implements EntityRegistryInterface {
      */
     public function getEntityIdentifier($entity_class): string
     {
-        $normalized = EntityUtils::normalizeEntityClass($entity_class);
+        $normalized = EntityUtil::normalizeEntityClass($entity_class);
         /** @var array $class_parts */
         $class_parts = explode('\\', $normalized);
         $is_plugin = $class_parts[0] === 'OIMCPlugins';
@@ -462,9 +463,15 @@ class EntityRegistry implements EntityRegistryInterface {
             if (!$this->cache->hasItem('manifest')) {
                 $this->buildManifest();
             }
-            return $this->cache->getItem('manifest')->get() ?? [];
+            return $this->cache->getItem('manifest')->get() ?? [
+                'entities'  => [],
+                'modules'   => []
+            ];
         } catch (InvalidArgumentException $e) {
-            return [];
+            return [
+                'entities'  => [],
+                'modules'   => []
+            ];
         }
     }
 

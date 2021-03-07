@@ -10,6 +10,10 @@
 
 namespace CJDevStudios\EntityManagementBundle\Util;
 
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\Mapping\MappedSuperclass;
+
 class EntityUtil {
 
    /**
