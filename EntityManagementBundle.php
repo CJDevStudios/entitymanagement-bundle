@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class EntityManagementBundle extends Bundle {
 
-   public function getContainerExtension()
+   public function getContainerExtension(): ?ExtensionInterface
    {
       return new EntityManagementExtension();
    }
