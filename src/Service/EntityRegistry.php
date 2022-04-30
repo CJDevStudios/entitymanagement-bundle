@@ -34,6 +34,7 @@ use ReflectionClass;
 use ReflectionProperty;
 use Symfony\Component\Cache\Adapter\ApcuAdapter;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Contracts\Cache\ItemInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
@@ -68,11 +69,12 @@ class EntityRegistry implements EntityRegistryInterface {
      * @param Stopwatch $stopwatch
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(CacheItemPoolInterface $entityRegistryPool, Stopwatch $stopwatch, EventDispatcherInterface $eventDispatcher)
+    public function __construct(CacheItemPoolInterface $entityRegistryPool, Stopwatch $stopwatch, EventDispatcherInterface $eventDispatcher, KernelInterface $kernel)
     {
         $this->cache = $entityRegistryPool;
         $this->stopwatch = $stopwatch;
         $this->eventDispatcher = $eventDispatcher;
+        $this->kernel = $kernel;
 
         // Trigger rebuild if needed
         $this->getManifest();
@@ -91,7 +93,7 @@ class EntityRegistry implements EntityRegistryInterface {
 
         if ($AUTOLOADER === null) {
             // Console env?
-            $classes = (require dirname(__DIR__) . '/../vendor/autoload.php')->getClassMap();
+            $classes = (require $this->kernel->getProjectDir() . '/vendor/autoload.php')->getClassMap();
         } else {
             $classes = $AUTOLOADER->getClassMap();
         }
